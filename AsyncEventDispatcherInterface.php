@@ -32,5 +32,5 @@ interface AsyncEventDispatcherInterface extends EventDispatcherInterface
      *
      * @return PromiseInterface
      */
-    public function asyncDispatch( string $eventName, KernelEvent $event): PromiseInterface;
+    public function asyncDispatch(string $eventName, KernelEvent $event): PromiseInterface;
 }
