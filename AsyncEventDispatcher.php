@@ -23,7 +23,7 @@ use Symfony\Component\HttpKernel\Event\KernelEvent;
 /**
  * Class AsyncEventDispatcher.
  */
-class AsyncEventDispatcher extends EventDispatcher
+class AsyncEventDispatcher extends EventDispatcher implements AsyncEventDispatcherInterface
 {
     /**
      * Dispatch an event asynchronously.
@@ -36,7 +36,7 @@ class AsyncEventDispatcher extends EventDispatcher
     public function asyncDispatch(
         string $eventName,
         KernelEvent $event
-    ) {
+    ): PromiseInterface {
         if ($listeners = $this->getListeners($eventName)) {
             return $this->doAsyncDispatch($listeners, $eventName, $event);
         }
@@ -60,7 +60,7 @@ class AsyncEventDispatcher extends EventDispatcher
         array $listeners,
         string $eventName,
         KernelEvent $event
-    ) {
+    ): PromiseInterface {
         $promise = new FulfilledPromise();
         foreach ($listeners as $listener) {
             $promise = $promise->then(function () use ($event, $eventName, $listener) {
